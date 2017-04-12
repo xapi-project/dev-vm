@@ -21,7 +21,6 @@ Vagrant.configure("2") do |config|
 
 # Get the VM up-to-date
     sudo apt-get update
-    sudo apt-get upgrade
 
 # Install opam and things for compiling xapi
     sudo apt-get install -y opam m4 libxen-dev git
@@ -53,6 +52,13 @@ Vagrant.configure("2") do |config|
 # Fix gnome-terminal
     sudo localectl set-locale LANG="en_GB.utf8"
 
+# Verify xapi can be built
+    git clone git://github.com/xapi-project/xen-api
+    eval `opam config env`
+    cd xen-api; ./configure; make; make test; cd ..
+
+# Reboot to ensure locale and profile changes are picked up
     sudo reboot
+
   SHELL
 end
