@@ -10,13 +10,15 @@ Vagrant.configure("2") do |config|
 
   config.ssh.forward_x11 = true
 
-  config.vm.network "public_network"
-
   config.vm.provider "virtualbox" do |vb|
      vb.gui = true
      vb.memory = "4096"
    end
-  
+
+  config.vm.provider "xenserver" do |xs|
+    xs.use_himn = true
+  end
+
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
 
 # Get the VM up-to-date
@@ -26,10 +28,9 @@ Vagrant.configure("2") do |config|
     sudo apt-get install -y opam m4 libxen-dev git
     opam init -a --compiler=4.02.3 -y
     opam remote add xs-opam git://github.com/xapi-project/xs-opam
-    opam install -y merlin ocp-indent utop lwt_react depext camlp4
+    opam install -y merlin ocp-indent ocp-index ocp-browser utop lwt_react depext camlp4
     sudo opam depext -y xapi
-    opam pin add xenctrl 0.9.32
-    opam install ezxenstore
+    opam pin add lwt 2.7.1
     opam install --deps-only xapi
 
 # Install editors
@@ -52,13 +53,21 @@ Vagrant.configure("2") do |config|
 # Fix gnome-terminal
     sudo localectl set-locale LANG="en_GB.utf8"
 
+# Docker
+    sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+    sudo apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial main'
+    sudo apt-get update
+    sudo apt-get install -y docker-engine
+    sudo usermod -aG docker vagrant
+
 # Verify xapi can be built
     git clone git://github.com/xapi-project/xen-api
     eval `opam config env`
-    cd xen-api; ./configure; make; make test; cd ..
+    cd xen-api; ./configure; make; make test > test.log; cd ..
 
-# Reboot to ensure locale and profile changes are picked up
-    sudo reboot
+# Reboot required to ensure locale and profile changes are picked up
+# We actually shut down because a `vagrant up` does some setting up.
+    sudo halt
 
   SHELL
 end
