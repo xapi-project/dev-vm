@@ -36,10 +36,13 @@ Vagrant.configure("2") do |config|
     sudo apt-get install xubuntu-desktop gksu leafpad synaptic
     sudo add-apt-repository -y "ppa:webupd8team/sublime-text-3"
     sudo apt-add-repository -y "ppa:webupd8team/atom"
+    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+    sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+    sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+
     sudo apt-get update
-    sudo apt-get install -y atom emacs vim sublime-text-installer
-    curl -L https://go.microsoft.com/fwlink/\?LinkID=760868 -o /tmp/code.deb
-    sudo apt-get install -y /tmp/code.deb
+    sudo apt-get install -y atom emacs vim sublime-text-installer code
+
     apm install nuclide ocaml-merlin language-ocaml
     code --install-extension hackwaly.ocaml
     opam install user-setup
