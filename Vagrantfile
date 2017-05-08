@@ -63,6 +63,9 @@ Vagrant.configure("2") do |config|
     sudo apt-get install -y docker-engine
     sudo usermod -aG docker vagrant
 
+# ocp-index completion
+    sudo curl https://raw.githubusercontent.com/OCamlPro/ocp-index/master/tools/oct.sh -o /etc/bash_completion.d/oct
+
 # Verify xapi can be built
     git clone git://github.com/xapi-project/xen-api
     eval `opam config env`
