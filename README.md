@@ -30,7 +30,7 @@ In the `Vagrantfile`, `xapi` is built in order to verify that the environment ha
 Using `xenopsd` as an example, its dependencies must first be installed:
 
 ```
-sudo opam depext -y xenopsd
+opam depext -y xenopsd
 # do any pinning required for xenopsd using `opam pin add ...`
 opam install --deps-only xenopsd
 ```
