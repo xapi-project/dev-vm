@@ -13,6 +13,7 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
      vb.gui = true
      vb.memory = "4096"
+     vb.customize ["modifyvm", :id, "--accelerate3d", "off"]
    end
 
   config.vm.provider "xenserver" do |xs|
