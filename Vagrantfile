@@ -89,7 +89,7 @@ Vagrant.configure("2") do |config|
 
 # Reboot required to ensure locale and profile changes are picked up
 # We actually shut down because a `vagrant up` does some setting up.
-    sudo halt
+    sudo poweroff
 
   SHELL
 end
