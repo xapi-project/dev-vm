@@ -13,6 +13,7 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
      vb.gui = true
      vb.memory = "4096"
+     vb.customize ["modifyvm", :id, "--accelerate3d", "off"]
    end
 
   config.vm.provider "xenserver" do |xs|
@@ -57,16 +58,12 @@ Vagrant.configure("2") do |config|
     sudo apt-get update
     sudo apt-get install -y code
     code --install-extension hackwaly.ocaml
-    # fix launching from GUI
-    sudo sed -i -e 's^/usr/share/code/code^/usr/share/code/code --disable-gpu^g' /usr/share/applications/code.desktop
 
 # Install Atom
     sudo apt-add-repository -y "ppa:webupd8team/atom"
     sudo apt-get update
     sudo apt-get install -y atom
     apm install nuclide ocaml-merlin language-ocaml
-    # fix launching from GUI
-    sudo sed -i -e 's^/opt/atom/atom^/opt/atom/atom --disable-gpu^g' /usr/share/applications/atom.desktop
 
 # Install vim
     sudo apt-get update
@@ -92,7 +89,7 @@ Vagrant.configure("2") do |config|
 
 # Reboot required to ensure locale and profile changes are picked up
 # We actually shut down because a `vagrant up` does some setting up.
-    sudo halt
+    sudo poweroff
 
   SHELL
 end
