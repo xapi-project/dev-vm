@@ -25,6 +25,24 @@ Vagrant.configure("2") do |config|
 # Get the VM up-to-date
     sudo apt-get update
 
+# Install go tools
+    sudo apt-get install git
+    wget https://storage.googleapis.com/golang/go1.8.1.linux-amd64.tar.gz --quiet
+    sudo tar -C /usr/local -xzf go1.8.1.linux-amd64.tar.gz
+    export PATH=$PATH:/usr/local/go/bin
+    mkdir ~/go
+    export PATH=$PATH:~/go/bin
+    go get github.com/mitchellh/gox
+    go get github.com/hashicorp/packer
+    go get github.com/mitchellh/go-vnc
+
+# Packer-builder-xenserver
+    mkdir -p ~/go/src/github.com/xenserver/
+    cd ~/go/src/github.com/xenserver/
+    git clone https://github.com/xenserver/packer-builder-xenserver.git
+    cd packer-builder-xenserver
+    ./build.sh
+
 # Install opam and dependencies for compiling xapi
     sudo apt-get install -y opam m4 libxen-dev
     opam init -a --compiler=4.02.3 -y
@@ -86,6 +104,7 @@ Vagrant.configure("2") do |config|
     sudo apt-get update
     sudo apt-get install -y docker-engine
     sudo usermod -aG docker vagrant
+
 
 # Reboot required to ensure locale and profile changes are picked up
 # We actually shut down because a `vagrant up` does some setting up.
