@@ -16,8 +16,9 @@ Vagrant.configure("2") do |config|
      vb.customize ["modifyvm", :id, "--accelerate3d", "off"]
    end
 
-  config.vm.provider "xenserver" do |xs|
-    xs.use_himn = true
+  config.vm.provider "xenserver" do |xs,override|
+    override.vm.box = "jonludlam/ubuntu-16.04"
+    override.vm.network "public_network", bridge: "xenbr0"
   end
 
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
