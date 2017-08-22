@@ -51,8 +51,6 @@ Vagrant.configure("2") do |config|
     opam remote add xs-opam git://github.com/xapi-project/xs-opam
     opam install -y lwt_react depext camlp4
     opam depext -y xapi
-    # due to constraints missing from old libraries, pinning the lwt package is necessary for certain configurations
-    opam pin add lwt 2.7.1
     opam install --deps-only xapi
 
 # Verify xapi can be built

@@ -70,8 +70,8 @@ Some specific version of one or more packages may need to be pinned using
 is needed if the component is temporarily broken due to an upstream
 dependency making breaking changes which we have not yet updated in
 [xs-opam](https://github.com/xapi-project/xs-opam) (or *cannot* yet
-change the dependency, as is the case with `lwt` as of writing this). For
-`xenopsd` there is no additional pinning currently required.
+change the dependency). For `xenopsd` there is no additional pinning
+currently required.
 
 Then, the opam packages which `xenopsd` depends on must be installed:
 
