@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
     opam init -a --compiler=4.02.3 -y
     eval `opam config env`
     opam remote add xs-opam git://github.com/xapi-project/xs-opam
-    opam install -y lwt_react depext camlp4
+    opam install -y cppo_ocamlbuild
     opam depext -y xapi
     opam install --deps-only xapi
 
