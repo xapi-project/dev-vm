@@ -46,16 +46,18 @@ Vagrant.configure("2") do |config|
 
 # Install opam and dependencies for compiling xapi
     sudo apt-get install -y opam m4 libxen-dev
-    opam init -a --compiler=4.02.3 -y
+    opam init -a --compiler=4.04.2 -y
     eval `opam config env`
     opam remote add xs-opam git://github.com/xapi-project/xs-opam
-    opam install -y cppo_ocamlbuild
-    opam depext -y xapi
+    opam depext -y xapi conduit.0.14.5
+    opam install -y conduit.0.14.5
     opam install --deps-only xapi
 
 # Verify xapi can be built
     sudo apt-get install -y git
     git clone git://github.com/xapi-project/xen-api
+    # To avoid stack overflow error:
+    ulimit -s 16384
     cd xen-api; ./configure; make; make test > test.log; cd ..
 
 # Install OCaml development tools
