@@ -49,8 +49,7 @@ Vagrant.configure("2") do |config|
     opam init -a --compiler=4.04.2 -y
     eval `opam config env`
     opam remote add xs-opam git://github.com/xapi-project/xs-opam
-    opam depext -y xapi conduit.0.14.5
-    opam install -y conduit.0.14.5
+    opam depext -y xapi
     opam install --deps-only xapi
 
 # Verify xapi can be built
