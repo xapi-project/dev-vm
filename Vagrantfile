@@ -6,7 +6,7 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
-  config.vm.box = "boxcutter/ubuntu1604-desktop"
+  config.vm.box = "ubuntu/xenial64"
 
   config.ssh.forward_x11 = true
 
@@ -25,6 +25,16 @@ Vagrant.configure("2") do |config|
 
 # Get the VM up-to-date
     sudo apt-get update
+
+# Desktop
+    sudo apt-get install -y xauth xorg openbox lightdm plymouth
+    sudo apt-get install -y ubuntu-desktop
+
+# Install vagrant
+    wget https://releases.hashicorp.com/vagrant/1.9.1/vagrant_1.9.1_x86_64.deb --quiet
+    sudo apt-get install -y ./vagrant_1.9.1_x86_64.deb
+    sudo apt-get install -y ansible
+    vagrant plugin install vagrant-xenserver
 
 # Install go tools
     sudo apt-get install git
