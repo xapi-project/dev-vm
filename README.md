@@ -34,10 +34,13 @@ You can create and run the VM with any platform supported by
 [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and
 [Vagrant](https://www.vagrantup.com/docs/installation/).
 
-The VM can be created/run using the `vagrant up` command. There may be
-an issue where this may fail the first time after a few seconds; run
-`vagrant provision` to restart the provisioning step of the setup and
-it should continue as normal.
+The `Vagrantfile` uses the `vagrant-disksize` plugin to increase the VM's disk.
+Install it by running `vagrant plugin install vagrant-disksize`.
+
+The VM can be created/run in VirtualBox using the `vagrant up --provider
+virtualbox` command. There may be an issue where this may fail the first time
+after a few seconds; run `vagrant provision` to restart the provisioning step
+of the setup and it should continue as normal.
 
 ## Setting up locally
 
