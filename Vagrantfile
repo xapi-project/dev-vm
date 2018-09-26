@@ -7,6 +7,9 @@
 # you're doing.
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/xenial64"
+  # Need to install the disksize plugin:
+  # vagrant plugin install vagrant-disksize
+  config.disksize.size = '50GB'
 
   config.ssh.forward_x11 = true
 
@@ -54,20 +57,23 @@ Vagrant.configure("2") do |config|
     cd packer-builder-xenserver
     ./build.sh
 
-# Install opam and dependencies for compiling xapi
-    sudo apt-get install -y opam m4 libxen-dev
-    opam init -a --compiler=4.04.2 -y
-    eval `opam config env`
+# Install opam
+    sudo apt-get install -y m4 libxen-dev
+    # Install opam 2:
+    sudo curl -sL https://github.com/ocaml/opam/releases/download/2.0.0/opam-2.0.0-x86_64-linux --output /usr/local/bin/opam
+    sudo chmod +x /usr/local/bin/opam
+    opam init --disable-sandboxing --auto-setup --compiler=4.06.1 --yes
+    eval `opam env`
     opam remote add xs-opam git://github.com/xapi-project/xs-opam
-    opam depext -y xapi
-    opam install --deps-only xapi
+    opam install -y opam-depext
 
-# Verify xapi can be built
+# Install dependencies of xapi and verify it can be built
     sudo apt-get install -y git
     git clone git://github.com/xapi-project/xen-api
-    # To avoid stack overflow error:
-    ulimit -s 16384
-    cd xen-api; ./configure; make; make test > test.log; cd ..
+    cd xen-api
+    opam depext -y xapi
+    opam install -y --deps-only .
+    ./configure; make; make test > test.log; cd ..
 
 # Install OCaml development tools
     opam install -y merlin ocp-indent ocp-index ocp-browser utop
