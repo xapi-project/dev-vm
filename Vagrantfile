@@ -60,7 +60,7 @@ Vagrant.configure("2") do |config|
 # Install opam
     sudo apt-get install -y m4 libxen-dev
     # Install opam 2:
-    sudo curl -sL https://github.com/ocaml/opam/releases/download/2.0.0/opam-2.0.0-x86_64-linux --output /usr/local/bin/opam
+    sudo curl -sL https://github.com/ocaml/opam/releases/download/2.0.1/opam-2.0.1-x86_64-linux --output /usr/local/bin/opam
     sudo chmod +x /usr/local/bin/opam
     opam init --disable-sandboxing --auto-setup --compiler=4.06.1 --yes
     eval `opam env`
