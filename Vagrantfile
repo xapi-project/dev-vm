@@ -92,7 +92,7 @@ Vagrant.configure("2") do |config|
     sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
     sudo apt-get update
     sudo apt-get install -y code
-    code --install-extension hackwaly.ocaml
+    code --install-extension freebroccolo.reasonml
 
 # Install Atom
     sudo apt-add-repository -y "ppa:webupd8team/atom"
