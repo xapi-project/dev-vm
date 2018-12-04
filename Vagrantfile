@@ -7,8 +7,8 @@
 # you're doing.
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/xenial64"
-  # Need to install the disksize plugin:
-  # vagrant plugin install vagrant-disksize
+  # For this to work you have to install the disksize plugin first by running:
+  #  vagrant plugin install vagrant-disksize
   config.disksize.size = '50GB'
 
   config.ssh.forward_x11 = true
@@ -16,6 +16,7 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
      vb.gui = true
      vb.memory = "4096"
+     vb.customize ["modifyvm", :id, "--vram", "64"]
      vb.customize ["modifyvm", :id, "--accelerate3d", "off"]
    end
 
@@ -30,8 +31,8 @@ Vagrant.configure("2") do |config|
     sudo apt-get update
 
 # Desktop
-    sudo apt-get install -y xauth xorg openbox lightdm plymouth
-    sudo apt-get install -y ubuntu-desktop
+    sudo apt-get install -y xauth xorg-video-abi-23 openbox lightdm plymouth
+    sudo apt-get install -y xorg ubuntu-desktop virtualbox-guest-x11-hwe
 
 # Install vagrant
     wget https://releases.hashicorp.com/vagrant/1.9.1/vagrant_1.9.1_x86_64.deb --quiet
@@ -91,7 +92,7 @@ Vagrant.configure("2") do |config|
     sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
     sudo apt-get update
     sudo apt-get install -y code
-    code --install-extension hackwaly.ocaml
+    code --install-extension freebroccolo.reasonml
 
 # Install Atom
     sudo apt-add-repository -y "ppa:webupd8team/atom"
@@ -112,6 +113,7 @@ Vagrant.configure("2") do |config|
     opam user-setup install
 
 # Fix gnome-terminal
+    sudo apt-get install -y language-pack-en-base
     sudo localectl set-locale LANG="en_GB.utf8"
 
 # Install Docker - required by planex-buildenv
