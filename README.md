@@ -60,29 +60,29 @@ In the `Vagrantfile`, `xapi` is built in order to verify that the
 environment has been set up correctly. In order to build other components,
 their dependencies must also be installed.
 
-Using `xenopsd` as an example, its external dependencies must first be
+Using `xapi-xenopsd` as an example, its external dependencies must first be
 installed using `depext`. This will install any operating system packages
-required by OCaml to compile `xenopsd`:
+required by OCaml to compile `xapi-xenopsd`:
 
 ```
-opam depext -y xenopsd
+opam depext -y xapi-xenopsd
 ```
 
 Some specific version of one or more packages may need to be pinned using
-`opam pin add <package> <version>` in order to compile `xenopsd`. This
+`opam pin add <package> <version>` in order to compile `xapi-xenopsd`. This
 is needed if the component is temporarily broken due to an upstream
 dependency making breaking changes which we have not yet updated in
 [xs-opam](https://github.com/xapi-project/xs-opam) (or *cannot* yet
-change the dependency). For `xenopsd` there is no additional pinning
+change the dependency). For `xapi-xenopsd` there is no additional pinning
 currently required.
 
-Then, the opam packages which `xenopsd` depends on must be installed:
+Then, the opam packages which `xapi-xenopsd` depends on must be installed:
 
 ```
-opam install --deps-only xenopsd
+opam install --deps-only xapi-xenopsd
 ```
 
-Finally, you can build `xenopsd` and run its tests:
+Finally, you can build `xapi-xenopsd` and run its tests:
 
 ```
 git clone https://github.com/xapi-project/xenopsd
@@ -91,4 +91,3 @@ cd xenopsd
 make
 make test
 ```
-
